@@ -102,4 +102,25 @@ defmodule Tut do
     IO.puts(a)
     IO.puts("The string a is #{String.length(a)}  characters long") # Length of string
   end
+
+  # Tut.rehearse_map(["Daniel", "Arvid"], &(&1))
+  def rehearse_map(_list, _fun, acc \\ []) # Basic Map function
+  def rehearse_map([], _fun, acc), do: Enum.reverse(acc)
+  def rehearse_map([head | tail], fun, acc), do: rehearse_map(tail, fun, [fun.(head) | acc])
+
+
+  def count(_, acc \\ 0) # Setup default values
+  def count([], acc), do: acc
+  def count([ _ | tail], acc), do: count(tail, acc + 1)
+  #                                                       Rehearse general functions
+  def english_hello(name), do: IO.puts("Hello #{name}")
+  def german_hello(name), do: IO.puts("Hallo #{name}")
+  # Tut.general_rollcall(["Dan", "ManMan"], &(IO.puts("Goddag #{&1}")))
+  # Tut.general_rollcall(["Dan", "ManMan"], fn x -> IO.puts("Goddag #{x}") end)
+  # Tut.rollcall(["Daniel", "Man"], &Tut.german_hello/1)
+  def general_rollcall([], _), do: IO.puts("")
+  def general_rollcall([name | names], greeter_function) do
+    greeter_function.(name)
+    general_rollcall(names, greeter_function)
+  end
 end
